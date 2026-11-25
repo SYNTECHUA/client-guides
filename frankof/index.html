@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FRANKOF: маршрут тесту</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}
+/* Layout: header, start strip, navigation help, then ONE vertical timeline of 10 steps (expand in place); roles + tips below */
+:root{
+  --bg:#f5f6fa; --surface:#ffffff; --surface-2:#eef1f7; --fg:#1c2233; --muted:#5d667c; --line:#d6dbe6;
+  --accent:#3d5afe; --accent-soft:#e8ecff;
+  --r-plan:#3d5afe; --r-plan-bg:#e8ecff;
+  --r-buy:#0f8a5a; --r-buy-bg:#dff4e9;
+  --r-shop:#c2620c; --r-shop-bg:#fdeedd;
+  --r-qc:#b0277a; --r-qc-bg:#fae3f1;
+  --r-store:#0a7f95; --r-store-bg:#dcf2f6;
+  --r-dir:#5a5f73; --r-dir-bg:#eceef3;
+  --shadow:0 1px 2px rgba(28,34,51,.06),0 4px 14px rgba(28,34,51,.06);
+  --f-display:"Manrope",system-ui,sans-serif; --f-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12151d; --surface:#1a1f2a; --surface-2:#232937; --fg:#e7eaf2; --muted:#9aa3b8; --line:#323a4b;
+  --accent:#8c9dff; --accent-soft:#262d4d;
+  --r-plan:#8c9dff; --r-plan-bg:#262d4d; --r-buy:#5fd6a2; --r-buy-bg:#173527; --r-shop:#f3a35a; --r-shop-bg:#3a2a18;
+  --r-qc:#ee8fc9; --r-qc-bg:#3b1f33; --r-store:#62d0e3; --r-store-bg:#163640; --r-dir:#b9bfd1; --r-dir-bg:#2a2f3c;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12151d; --surface:#1a1f2a; --surface-2:#232937; --fg:#e7eaf2; --muted:#9aa3b8; --line:#323a4b;
+  --accent:#8c9dff; --accent-soft:#262d4d;
+  --r-plan:#8c9dff; --r-plan-bg:#262d4d; --r-buy:#5fd6a2; --r-buy-bg:#173527; --r-shop:#f3a35a; --r-shop-bg:#3a2a18;
+  --r-qc:#ee8fc9; --r-qc-bg:#3b1f33; --r-store:#62d0e3; --r-store-bg:#163640; --r-dir:#b9bfd1; --r-dir-bg:#2a2f3c;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25); color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.55}
+.wrap{max-width:980px;margin:0 auto;padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
+h1{font-size:clamp(1.6rem,3.2vw,2.2rem);font-weight:800;letter-spacing:-.01em}
+h2{font-size:1.25rem;font-weight:700}
+p{margin:0}
+.eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lead{color:var(--muted);max-width:68ch}
+header{display:flex;flex-direction:column;gap:10px}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+code,.mono{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:.88em;background:var(--surface-2);padding:1px 6px;border-radius:6px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:12px}
+
+/* start */
+.start{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.start .s{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;gap:12px;align-items:flex-start}
+.num{flex:none;width:28px;height:28px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-family:var(--f-display);font-weight:800;display:grid;place-items:center;font-size:.85rem}
+.s b{display:block;margin-bottom:2px}
+.s small{color:var(--muted);font-size:.86rem}
+.btn{display:inline-flex;align-items:center;gap:6px;margin-top:8px;background:var(--accent);color:var(--bg);text-decoration:none;font-weight:600;font-size:.86rem;padding:7px 12px;border-radius:9px}
+
+/* nav help */
+.navsteps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.nv{display:flex;flex-direction:column;gap:8px;font-size:.9rem}
+.mock{background:#262a4f;border-radius:12px;padding:12px;min-height:118px;display:flex;align-items:flex-start;gap:12px;color:#e9ebff;font-family:var(--f-display)}
+.mock.col{flex-direction:column;gap:6px}
+.dots{background:#3b4075;border-radius:8px;padding:4px 9px;font-size:1.05rem;letter-spacing:-.15em;outline:2px solid #ffb347;outline-offset:2px}
+.logo{font-weight:700;font-size:1.05rem;padding-top:3px}
+.sel{font-weight:700;font-size:.9rem;border-bottom:1px solid #4a5088;padding-bottom:6px;width:100%}
+.opt-l{font-size:.84rem;padding:3px 8px;border-radius:6px;opacity:.75}
+.opt-l.on{background:#3b4075;opacity:1;outline:1.5px solid #ffb347}
+
+/* timeline */
+.tl-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.tl-tools button{all:unset;cursor:pointer;font-size:.85rem;font-weight:600;color:var(--accent);padding:5px 10px;border-radius:8px;background:var(--accent-soft)}
+.timeline{list-style:none;margin:0;padding:0;position:relative}
+.timeline::before{content:"";position:absolute;left:19px;top:20px;bottom:20px;width:2px;background:var(--line)}
+.phase-l{position:relative;padding:14px 0 6px 52px;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.phase-l:first-child{padding-top:0}
+.item{position:relative;padding:0 0 12px 52px}
+.dotn{position:absolute;left:0;top:10px;width:40px;height:40px;border-radius:50%;background:var(--rc);color:var(--surface);font-family:var(--f-display);font-weight:800;display:grid;place-items:center;font-size:1rem;box-shadow:0 0 0 4px var(--bg)}
+details{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--rc);border-radius:12px}
+details[open]{box-shadow:var(--shadow)}
+summary{list-style:none;cursor:pointer;padding:12px 16px;display:flex;flex-direction:column;gap:6px}
+summary::-webkit-details-marker{display:none}
+.sum-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.sum-top h3{font-size:1.08rem;font-weight:700}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--rb);color:var(--rc);white-space:nowrap}
+.path{display:flex;flex-wrap:wrap;gap:5px;align-items:center;font-size:.85rem}
+.path span{background:var(--surface-2);border-radius:7px;padding:2px 8px}
+.path i{color:var(--muted);font-style:normal}
+.more{font-size:.8rem;color:var(--accent);font-weight:600}
+details[open] .more{display:none}
+.body{padding:0 16px 16px;display:flex;flex-direction:column;gap:12px}
+.body ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.see{background:var(--surface-2);border-radius:10px;padding:10px 12px;font-size:.9rem}
+.tip{border-left:3px solid var(--r-shop);padding:2px 0 2px 10px;font-size:.88rem;color:var(--muted)}
+
+/* roles + tips */
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
+@media (max-width:860px){.two{grid-template-columns:minmax(0,1fr)}}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+ul.tips{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:8px;font-size:.9rem}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">FRANKOF · тестовий стенд Creatio</span>
+    <h1>Маршрут тесту: від замовлення дилера до відвантаження</h1>
+    <p class="lead">Ви проводите одне своє замовлення через усі ролі: планування, закупівлю, цехи, якість і склад. Йдіть по кроках зверху вниз. Натисніть крок, щоб побачити, що робити.</p>
+  </header>
+
+  <section aria-labelledby="start-h" style="display:flex;flex-direction:column;gap:12px">
+    <h2 id="start-h">З чого почати</h2>
+    <div class="start">
+      <div class="s"><span class="num">1</span><div><b>Відкрийте стенд</b><small>Перше відкриття розділу може тривати до 2 хвилин.</small><br><a class="btn" href="https://syntechmanufacturing2-demo.creatio.com/" target="_blank" rel="noopener">Відкрити стенд ↗</a></div></div>
+      <div class="s"><span class="num">2</span><div><b>Увійдіть під роллю кроку</b><small>Логін указаний на кожному кроці. Паролі надішле менеджер Syntech.</small></div></div>
+      <div class="s"><span class="num">3</span><div><b>Візьміть своє замовлення</b><small><span class="mono">128340</span> («Комфорт Дім») або <span class="mono">128341</span> («Затишок»). Мальме ×2, Денвер, Рона, дата 11.12.</small></div></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="nav-h" class="card">
+    <h2 id="nav-h">Як знайти потрібний розділ</h2>
+    <p class="lead">Розділи в Creatio згруповані в робочі місця. Кожна роль бачить лише свої. На кожному кроці нижче шлях починається з ⋮⋮⋮.</p>
+    <div class="navsteps">
+      <div class="nv"><div class="mock"><span class="dots" aria-hidden="true">⋮⋮⋮</span><span class="logo">Creatio</span></div><p><b>1.</b> Натисніть кнопку з дев'ятьма крапками в лівому верхньому куті.</p></div>
+      <div class="nv"><div class="mock col"><span class="sel">Планування виробництва ▾</span><span class="opt-l">Продажі</span><span class="opt-l on">Планування виробництва</span><span class="opt-l">Закупівлі</span></div><p><b>2.</b> Угорі панелі розкрийте список робочих місць і виберіть своє.</p></div>
+      <div class="nv"><div class="mock col"><span class="opt-l on">Домашня сторінка</span><span class="opt-l">Плани виробництва</span><span class="opt-l">Виробничі замовлення</span></div><p><b>3.</b> Зліва з'являться розділи. «Домашня сторінка» відкриває головну сторінку ролі.</p></div>
+    </div>
+    <p style="font-size:.88rem;color:var(--muted)">Запис за номером можна знайти через поле «Пошук» угорі екрана.</p>
+  </section>
+
+  <section aria-labelledby="tl-h" style="display:flex;flex-direction:column;gap:14px">
+    <div class="tl-head"><h2 id="tl-h">Кроки тесту</h2><div class="tl-tools"><button id="toggle-all" type="button">Розгорнути всі</button></div></div>
+    <ol class="timeline" id="timeline"></ol>
+  </section>
+
+  <section class="two">
+    <div class="card">
+      <h2>Ролі та логіни</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>Роль</th><th>Логін</th><th>Кроки</th><th>Робочі місця</th></tr></thead>
+        <tbody id="roles"></tbody>
+      </table></div>
+    </div>
+    <div class="card">
+      <h2>Що варто знати</h2>
+      <ul class="tips">
+        <li><b>Працюйте лише зі своїм замовленням</b> і тим, що воно створило. Інші записи на стенді — приклади для перегляду.</li>
+        <li><b>Порожній список у розділі</b> — найчастіше стоїть фільтр із вашим іменем угорі. Зніміть його хрестиком ×.</li>
+        <li><b>Нічого не видаляйте.</b> Якщо створили зайве, напишіть менеджеру, ми приберемо.</li>
+        <li><b>«Дефіцит» на етапі до старту</b> — матеріал уже зарезервований під ваше замовлення. Він списується після «Почати».</li>
+        <li><b>«Матеріали списано не повністю» або червона помилка списання</b> — сировина ще не прийшла або напівфабрикат не готовий. Поверніться до кроків 4–5.</li>
+        <li><b>«Немає що друкувати» в «Друк етикетки»</b> — етикетка з'являється після «Почати».</li>
+        <li><b>«Приймання недоступне» в заявці</b> — заявка ще чернетка. Спершу погодження й «Позначити замовленою».</li>
+        <li><b>Знак $ біля суми в гривнях</b> — формат поля на тестовому стенді.</li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<script>
+const ROLES={
+  plan:{name:"Планувальник (офіс)",login:"frankof.planner",steps:"1–4, 8–10",where:"«Продажі», «Планування виробництва», «Закупівлі», «Склад», «Управління виробництвом»"},
+  shop:{name:"Оператор цеху",login:"frankof.operator",steps:"5–7",where:"«Робоче місце оператора», «Контроль якості»"}
+};
+const PHASES={1:"Продаж і план",4:"Закупівля",5:"Виробництво",8:"Склад і результат"};
+const STEPS=[
+  {t:"Замовлення дилера",r:"plan",path:["⋮⋮⋮","Продажі","Замовлення","128340 / 128341"],
+   do:["Список спершу порожній: угорі стоїть фільтр із вашим іменем (відповідальний). Зніміть його хрестиком ×, і з'являться всі замовлення.","Відкрийте своє замовлення за номером.","Перегляньте салон, вироби, кількість, планову дату й коментар із бланка дилера."],
+   see:"Одна картка замість паперового бланка й ручного перенесення в облікову систему."},
+  {t:"Чи встигаємо",r:"plan",path:["⋮⋮⋮","Продажі","Замовлення","вкладка «Матеріали»"],
+   do:["На вкладці «Матеріали» натисніть «Перевірити матеріали»."],
+   see:"Що є на складі, що треба виготовити (каркас, ніжки, чохол), що докупити, і обіцяна дата поруч із запитаною.",
+   tip:"Перевірка — швидка оцінка. Точну потребу рахує MRP на наступному кроці."},
+  {t:"План і MRP",r:"plan",path:["⋮⋮⋮","Продажі","Замовлення","«Матеріали»","«Створити план виробництва»"],
+   do:["На вкладці «Матеріали» натисніть «Створити план виробництва» і відкрийте план. Пізніше план знайдете так: ⋮⋮⋮ → «Планування виробництва» → «Плани виробництва».","На сторінці плану натисніть три крапки «…» вгорі праворуч, поруч із кнопками сторінки → «Розрахунок MRP».","Знову «…» вгорі праворуч → «Сформувати виробничі замовлення».","Знову «…» вгорі праворуч → «Підтвердити усі замовлення».","Запишіть номери з вкладки «Виробничі замовлення»: ВЗ-2026-… (вироби) і ВЗ-НФ-2026-… (напівфабрикати)."],
+   see:"Кожен цех отримує свої виробничі замовлення з датами, а на сировину, якої бракує, з'являються заявки постачальникам.",
+   tip:"Кнопку «Створити заявки на закупівлю дефіциту» не натискайте: MRP уже створив заявки."},
+  {t:"Заявки й приймання",r:"plan",path:["⋮⋮⋮","Закупівлі","розділ «Закупівлі»","«Матеріали MRP — …»"],
+   do:["Відкрийте заявки, які створив ваш план (по одній на постачальника).","У заявці на тканину Migliore перевірте метри: вони пораховані за нормою карти розкрою з відходами.","«Надіслати на погодження» → погодьте.","«Позначити замовленою» → прийміть матеріал із вхідним контролем."],
+   see:"Заявка з'являється сама, закупівельник лише погоджує й приймає. Після приймання матеріал з'являється в комірці.",
+   tip:"Поки заявка в статусі «Чернетка», приймання недоступне."},
+  {t:"Цех: напівфабрикати",r:"shop",path:["⋮⋮⋮","Робоче місце оператора","кнопка «Усі відкриті»","пошук ВЗ-НФ-…"],
+   do:["Введіть у пошук номер ВЗ-НФ з кроку 3: каркас, ніжки або чохол.","На етапі #10 «Переглянути карти»: техкарта, карта розкрою, креслення.","«Почати» → «Друк етикетки».","«Завершити» з повною кількістю. Далі етапи #20, #30… по черзі."],
+   see:"Оператор бачить карту розкрою й техкарту на екрані, а час і виконавця система фіксує сама.",
+   tip:"Ніжки: #10 розпил бруса, #20 токарна, #30 шліфування, #40 лакування, #50 пакування."},
+  {t:"Контроль якості",r:"shop",path:["⋮⋮⋮","Контроль якості","Перевірки якості"],
+   do:["Після етапів із контролем (столярка, пошиття, оббивка) відкрийте нову перевірку.","Внесіть значення, наприклад різницю діагоналей каркаса (норма до 3 мм).","Затвердьте або відхиліть."],
+   see:"Паперовий чек-лист став перевіркою на етапі. Відхилення створює невідповідність із рішенням і вартістю браку.",
+   tip:"Готовий приклад: невідповідність NCR-2026-0001 (перекіс малюнка тканини)."},
+  {t:"Збирання виробу",r:"shop",path:["⋮⋮⋮","Робоче місце оператора","кнопка «Усі відкриті»","пошук ВЗ-2026-…"],
+   do:["Коли напівфабрикати готові, знайдіть ВЗ-2026-… дивана або ліжка.","«Переглянути карти» і «Супровідний лист».","Пройдіть етапи так само, як на кроці 5."],
+   see:"Кожен бачить свою чергу етапів, креслення й супровідний лист без паперових замовлень цехам.",
+   tip:"Якщо почати збирання до напівфабрикатів і сировини, буде червона помилка списання матеріалів."},
+  {t:"Розміщення на склад",r:"plan",path:["⋮⋮⋮","Склад","Головна комірника","«Комірчасте зберігання»","Відкриті задачі розміщення"],
+   do:["Після останнього етапу з'являється задача WT-… з підказаною коміркою.","Виберіть задачу → «Підтвердження скануванням» → комірка.","Залишки по комірках — вкладка «Комірки та залишки» в тому ж блоці."],
+   see:"Виріб не губиться між цехом і складом: напівфабрикати лягають у комірки FR-S-…, готові вироби в FR-GP-01."},
+  {t:"Відвантаження дилеру",r:"plan",path:["⋮⋮⋮","Продажі","Замовлення","«Створити відвантаження»"],
+   do:["Коли всі вироби в комірці, на картці замовлення натисніть «Створити відвантаження».","У видатковому документі перевірте серійні номери й комірку, роздрукуйте лист відбору й сертифікат якості.","«Видати». Документ потім знайдете тут: ⋮⋮⋮ → «Склад» → «Видаткові документи»."],
+   see:"Після повного відвантаження замовлення саме стає «Завершено».",
+   tip:"Готовий приклад: видатковий документ ISS-20261110-015."},
+  {t:"Результат",r:"plan",path:["⋮⋮⋮","Управління виробництвом","Аналітика виробництва","вкладка «Аналітика»"],
+   do:["«Маржа»: згрупуйте за «Договір».","Діаграма «Від нормативної маржі до фактичної»: причини втрат.","«Строки»: чому замовлення запізнилось. Завантаження цехів."],
+   see:"Маржа за договором і причини втрат видно без ручних звітів."}
+];
+const tl=document.getElementById('timeline');
+STEPS.forEach((s,i)=>{
+  const n=i+1,R=ROLES[s.r];
+  if(PHASES[n]) tl.insertAdjacentHTML('beforeend',`<li class="phase-l" aria-hidden="true">${PHASES[n]}</li>`);
+  const li=document.createElement('li');li.className='item';li.id='step-'+n;
+  li.setAttribute('style',`--rc:var(--r-${s.r});--rb:var(--r-${s.r}-bg)`);
+  li.innerHTML=`<span class="dotn" aria-hidden="true">${n}</span>
+  <details${n===1?' open':''}>
+    <summary>
+      <div class="sum-top"><h3><span class="sr" style="position:absolute;left:-9999px">Крок ${n}. </span>${s.t}</h3><span class="chip">${R.name} · ${R.login}</span></div>
+      <div class="path">${s.path.map(p=>`<span>${p}</span>`).join('<i>›</i>')}</div>
+      <span class="more">Що робити ▾</span>
+    </summary>
+    <div class="body">
+      <ol>${s.do.map(d=>`<li>${d}</li>`).join('')}</ol>
+      <div class="see"><b>Що побачите.</b> ${s.see}</div>
+      ${s.tip?`<div class="tip">${s.tip}</div>`:''}
+    </div>
+  </details>`;
+  tl.appendChild(li);
+});
+const btn=document.getElementById('toggle-all');
+btn.onclick=()=>{const all=[...document.querySelectorAll('.timeline details')];const open=!all.every(d=>d.open);all.forEach(d=>d.open=open);btn.textContent=open?'Згорнути всі':'Розгорнути всі';};
+const m=/^#step-(\d+)$/.exec(location.hash);if(m){const d=document.querySelector('#step-'+m[1]+' details');if(d){d.open=true;}}
+document.getElementById('roles').innerHTML=Object.values(ROLES).map(r=>`<tr><td>${r.name}</td><td><span class="mono">${r.login}</span></td><td>${r.steps}</td><td>${r.where}</td></tr>`).join('')
+ +`<tr><td><b>Директор (усі ролі)</b></td><td><span class="mono">frankof.director</span></td><td>1–10</td><td>Усі робочі місця вище: можна пройти весь маршрут під одним логіном, не перезаходячи</td></tr>`;
+</script>
+
+</body>
+</html>
